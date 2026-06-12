@@ -921,8 +921,15 @@
       return;
     }
 
-    // Aqui futuramente integra com Mailchimp, ConvertKit, etc.
-    // Por ora, simula o envio
+    // Preenche o formulário oculto do Brevo com os dados calculados
+    document.getElementById('brevo-email').value = email;
+    document.getElementById('brevo-nome').value = nomeUsuario;
+    document.getElementById('brevo-arcano').value = arcanoCalculado;
+
+    // Envia para o Brevo via iframe oculto (sem recarregar a página)
+    document.getElementById('brevo-hidden-form').submit();
+
+    // Mostra mensagem de sucesso
     document.getElementById('result-panel').style.display = 'none';
     document.getElementById('calc-form').style.display = 'none';
     const success = document.getElementById('success-msg');
@@ -930,6 +937,22 @@
     success.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 </script>
+
+<!-- ── BREVO HIDDEN FORM ── -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+<form
+  id="brevo-hidden-form"
+  action="https://7538abe1.sibforms.com/serve/MUIFAHArDIE3-MB0sK3LUCpplHneqaoMajtCN_q_-jUtabgrpVlW7nXIMzlQUj2arcueqRxOPZYWURzemT67eNVgZo4fq-0Eu1vrrhSq2f7EmnIOMUbFupBbUW-SCAczV135Nb0uYeZlmE-alYkuA19aonWydqhoNxHXMzzyr8mdcrD4bTl7V1Ij_bH8AjeRaObGLpQdYw-aQyrMrQ=="
+  method="POST"
+  target="hidden_iframe"
+  style="display:none;"
+>
+  <input type="text" id="brevo-email" name="EMAIL" value="" />
+  <input type="text" id="brevo-nome" name="NOME" value="" />
+  <input type="text" id="brevo-arcano" name="ARCANO" value="" />
+  <input type="text" name="email_address_check" value="" class="input--hidden" />
+  <input type="hidden" name="locale" value="pt" />
+</form>
 
 </body>
 </html>
